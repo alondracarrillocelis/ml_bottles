@@ -1,0 +1,19 @@
+from ultralytics import YOLO
+
+model = YOLO("yolov8n-cls.pt")  
+# Entrenamiento
+model.train(
+    data="data.yaml",        
+    epochs=60,               
+    imgsz=224,               
+    batch=16,
+    name="bottle_condition_classifier",
+    project="runs/train",
+    verbose=True
+)
+
+# Evaluación
+metrics = model.val()
+
+# Exportar el modelo
+model.export(format="onnx")
